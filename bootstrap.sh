@@ -40,7 +40,7 @@ echo "Updating $BASHRC from $RVM_TMP_RC..."
 cp $RVM_TMP_RC $BASHRC
 
 echo "Executing bash install script"
-if ! $BASH_RUBY_INSTALL_SCRIPT; then
+if ! bash $BASH_RUBY_INSTALL_SCRIPT; then
     echo "Bash install script failed" 1>&2
     exit 1
 fi
