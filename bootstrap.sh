@@ -1,8 +1,8 @@
 #!/bin/sh
 
 # Process command line arguments
-RUBY_VERSION=$0
-if ! test -z "$RUBY_VERSION"; then
+RUBY_VERSION=$1
+if test -z $RUBY_VERSION; then
     echo "You must specify ruby version" 1>&2;
     exit 1;
 fi
