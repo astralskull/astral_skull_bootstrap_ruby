@@ -5,7 +5,7 @@ RVM_TMP_RC="/tmp/rvm_tmp_rc_$(whoami)"
 HOME_DIR="/home/$(whoami)/"
 BASHRC="$HOME_DIR/.bashrc"
 BASHRC_BACKUP="$BASHRC".bak.rvm.$(date +%F)
-BASH_RUBY_INSTALL_SCRIPT="./bootstrap_bash.sh"
+BASH_RUBY_INSTALL_SCRIPT="bootstrap_bash.sh"
 
 # Process command line arguments
 RUBY_VERSION=$1
