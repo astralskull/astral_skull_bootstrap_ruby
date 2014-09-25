@@ -4,7 +4,8 @@
 RVM_TMP_RC="/tmp/rvm_tmp_rc_$(whoami)"
 HOME_DIR="/home/$(whoami)/"
 BASHRC="$HOME_DIR/.bashrc"
-BASHRC_BACKUP="$BASHRC".bak.rvm.$(date)
+BASHRC_BACKUP="$BASHRC".bak.rvm.$(date +%F)
+BASH_RUBY_INSTALL_SCRIPT="./bootstrap_bash.sh"
 
 # Process command line arguments
 RUBY_VERSION=$1
@@ -12,8 +13,6 @@ if test -z $RUBY_VERSION; then
     echo "You must specify ruby version" 1>&2;
     exit 1;
 fi
-
-
 
 # Update repositories
 echo "If needed, enter password to update repositories";
@@ -40,10 +39,8 @@ mv $BASHRC $BASHRC_BACKUP
 echo "Updating $BASHRC from $RVM_TMP_RC..."
 cp $RVM_TMP_RC $BASHRC
 
-# Read the new bashrc
-source ~/.bashrc
-
-if ! rvm install $RUBY_VERSION; then
-    echo "Could not install ruby $RUBY_VERSION" 1>&2;
-    exit 1;
+echo "Executing bash install script"
+if ! $BASH_RUBY_INSTALL_SCRIPT; then
+    echo "Bash install script failed" 1>&2
+    exit 1
 fi
