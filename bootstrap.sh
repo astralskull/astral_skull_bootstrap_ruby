@@ -1,5 +1,11 @@
 #!/bin/sh
 
+# Define constants
+RVM_TMP_RC="/tmp/rvm_tmp_rc_$(whoami)"
+HOME_DIR="/home/$(whoami)/"
+BASHRC="$HOME_DIR/.bashrc"
+BASHRC_BACKUP="$BASHRC".bak.rvm.$(date)
+
 # Process command line arguments
 RUBY_VERSION=$1
 if test -z $RUBY_VERSION; then
@@ -7,8 +13,7 @@ if test -z $RUBY_VERSION; then
     exit 1;
 fi
 
-# Set variables
-TMP_RVM_RC=/tmp/rvm_rc
+
 
 # Update repositories
 echo "If needed, enter password to update repositories";
@@ -22,6 +27,21 @@ if ! curl -sSL https://get.rvm.io | bash -s stable; then
    echo "Could not install RVM" 1>&2; 
    exit 1;
 fi
+
+# Update bashrc
+echo "if test -f ~/.rvm/scripts/rvm; then" > $RVM_TMP_RC
+echo "    [ "$(type -t rvm)" = "function" ] || source ~/.rvm/scripts/rvm" >> $RVM_TMP_RC
+echo "fi" >> $RVM_TMP_RC
+echo "rvm use $RUBY_VERSION > /dev/null;" >> $RVM_TMP_RC
+cat $BASHRC >> $RVM_TMP_RC
+echo 
+echo "Backing up $BASHRC to $BASHRC_BACKUP"
+mv $BASHRC $BASHRC_BACKUP
+echo "Updating $BASHRC from $RVM_TMP_RC..."
+cp $RVM_TMP_RC $BASHRC
+
+# Read the new bashrc
+source ~/.bashrc
 
 if ! rvm install $RUBY_VERSION; then
     echo "Could not install ruby $RUBY_VERSION" 1>&2;
