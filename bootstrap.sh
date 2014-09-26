@@ -30,7 +30,7 @@ fi
 
 # Update bashrc
 echo "if test -f ~/.rvm/scripts/rvm; then" > $RVM_TMP_RC
-echo "    [ "$(type -t rvm)" = "function" ] || source ~/.rvm/scripts/rvm" >> $RVM_TMP_RC
+echo "    [ \"\$(type -t rvm)\" = \"function\" ] || source ~/.rvm/scripts/rvm" >> $RVM_TMP_RC
 echo "fi" >> $RVM_TMP_RC
 echo "rvm use $RUBY_VERSION > /dev/null;" >> $RVM_TMP_RC
 cat $BASHRC >> $RVM_TMP_RC
