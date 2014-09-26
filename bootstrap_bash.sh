@@ -1,5 +1,7 @@
 #!/bin/bash
 
+RUBY_VERSION=$1
+
 source ~/.rvm/scripts/rvm
 
 # Install ruby
