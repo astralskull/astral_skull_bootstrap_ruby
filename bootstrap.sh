@@ -5,7 +5,8 @@ RVM_TMP_RC="/tmp/rvm_tmp_rc_$(whoami)"
 HOME_DIR="/home/$(whoami)/"
 BASHRC="$HOME_DIR/.bashrc"
 BASHRC_BACKUP="$BASHRC".bak.rvm.$(date +%F)
-BASH_RUBY_INSTALL_SCRIPT="bootstrap_bash.sh"
+SCRIPT_DIR=$(dirname $0)
+BASH_RUBY_INSTALL_SCRIPT="$SCRIPT_DIR/bootstrap_bash.sh"
 
 # Process command line arguments
 RUBY_VERSION=$1
@@ -40,7 +41,7 @@ echo "Updating $BASHRC from $RVM_TMP_RC..."
 cp $RVM_TMP_RC $BASHRC
 
 echo "Executing bash install script"
-if ! bash $BASH_RUBY_INSTALL_SCRIPT; then
+if ! $BASH_RUBY_INSTALL_SCRIPT; then
     echo "Bash install script failed" 1>&2
     exit 1
 fi
